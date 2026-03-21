@@ -22,6 +22,7 @@ class ControlledRNG
     private float $entropyLevel;
     private string $buffer = '';
     private int $counter = 0;
+    private int|null|float $gaussianSpare;
 
     public function __construct(int $seed = 42, float $entropyLevel = 0.0)
     {
@@ -132,5 +133,31 @@ class ControlledRNG
     {
         $this->state = $state['state'];
         $this->counter = $state['counter'];
+    }
+
+    public function gaussian(float $mean = 0.0, float $stdDev = 1.0): float
+    {
+        // используем кэш (оптимизация Box-Muller)
+        if ($this->gaussianSpare !== null) {
+            $val = $this->gaussianSpare;
+            $this->gaussianSpare = null;
+            return $mean + $stdDev * $val;
+        }
+
+        $u1 = $this->random();
+        $u2 = $this->random();
+
+        // защита от log(0)
+        $u1 = max($u1, 1e-12);
+
+        $r = sqrt(-2.0 * log($u1));
+        $theta = 2.0 * M_PI * $u2;
+
+        $z0 = $r * cos($theta);
+        $z1 = $r * sin($theta);
+
+        $this->gaussianSpare = $z1;
+
+        return $mean + $stdDev * $z0;
     }
 }
