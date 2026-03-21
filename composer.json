@@ -1,0 +1,17 @@
+{
+    "name": "oem/controlled-random",
+    "autoload": {
+        "psr-4": {
+            "Robotateme\\ControlledRandom\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "robotateme",
+            "email": "jarwork884@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/var-dumper": "^8.0"
+    }
+}
