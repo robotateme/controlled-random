@@ -160,4 +160,77 @@ class ControlledRNG
 
         return $mean + $stdDev * $z0;
     }
+
+    /**
+     * Выбор по весам
+     * ['a' => 10, 'b' => 1]
+     */
+    public function weightedChoice(array $weights): int|string|null
+    {
+        $total = array_sum($weights);
+
+        if ($total <= 0) {
+            throw new InvalidArgumentException("Weights must be > 0");
+        }
+
+        $r = $this->random() * $total;
+
+        foreach ($weights as $item => $weight) {
+            $r -= $weight;
+            if ($r <= 0) {
+                return $item;
+            }
+        }
+
+        return array_key_last($weights);
+    }
+
+    /**
+     * λ = rate (событий в единицу времени)
+     */
+    public function exponential(float $lambda = 1.0): float
+    {
+        $u = max($this->random(), 1e-12);
+        return -log($u) / $lambda;
+    }
+
+    public function poisson(float $lambda): int
+    {
+        $L = exp(-$lambda);
+        $k = 0;
+        $p = 1.0;
+
+        do {
+            $k++;
+            $p *= $this->random();
+        } while ($p > $L);
+
+        return $k - 1;
+    }
+
+    public function bernoulli(float $p): bool
+    {
+        return $this->random() < $p;
+    }
+
+    public function sample(array $items, int $k): array
+    {
+        if ($k > count($items)) {
+            throw new InvalidArgumentException("k > size");
+        }
+
+        $this->shuffle($items);
+        return array_slice($items, 0, $k);
+    }
+
+    public function temperature(float $temperature = 1.0): float
+    {
+        $val = $this->random();
+
+        if ($temperature <= 0) {
+            return 0.0;
+        }
+
+        return $val ** (1 / $temperature);
+    }
 }
