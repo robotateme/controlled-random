@@ -3,6 +3,11 @@
     "autoload": {
         "psr-4": {
             "Robotateme\\ControlledRandom\\": "src/"
+        },
+        "autoload-dev": {
+            "psr-4": {
+                "Tests\\": "tests/"
+            }
         }
     },
     "authors": [
@@ -13,5 +18,8 @@
     ],
     "require": {
         "symfony/var-dumper": "^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.0"
     }
 }

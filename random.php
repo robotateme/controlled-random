@@ -4,16 +4,16 @@ use Robotateme\ControlledRandom\ControlledRNG;
 
 require_once 'vendor/autoload.php';
 
-$rng = new ControlledRNG(seed: 123, entropyLevel: 0.3);
-$items = ['a', 'b', 'c', 'd'];
+$rng = new ControlledRNG(123, 1);
 
-$i = 0;
-while (true) {
-    $i++;
-    $rng->shuffle($items);
-    if ($items === ['a', 'b', 'c', 'd']) {
-        dd('Exit on '. $i);
+$trueCount = 0;
+$n = 10000;
+
+for ($i = 0; $i < $n; $i++) {
+    if ($rng->bool(0.3)) {
+        $trueCount++;
     }
-    dump(implode($items));
-    sleep(1);
 }
+
+$ratio = $trueCount / $n;
+dump($ratio * 100);

@@ -22,7 +22,7 @@ class ControlledRNG
     private float $entropyLevel;
     private string $buffer = '';
     private int $counter = 0;
-    private int|null|float $gaussianSpare;
+    private int|null|float $gaussianSpare = null;
 
     public function __construct(int $seed = 42, float $entropyLevel = 0.0)
     {
