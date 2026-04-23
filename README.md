@@ -234,7 +234,7 @@ composer stan
 
 Расширенные практические сценарии вынесены в файл:
 
-- [docs/EXAMPLES_RU.md](/home/oem/Work/controlled-random/docs/EXAMPLES_RU.md)
+- [docs/EXAMPLES_RU.md](docs/EXAMPLES_RU.md)
 
 ## Структура проекта
 
