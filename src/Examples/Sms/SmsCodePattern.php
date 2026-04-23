@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Robotateme\ControlledRandom;
+namespace Robotateme\ControlledRandom\Examples\Sms;
 
 enum SmsCodePattern: string
 {

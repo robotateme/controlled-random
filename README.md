@@ -47,7 +47,7 @@ require_once 'vendor/autoload.php';
 ```php
 <?php
 
-use Robotateme\ControlledRandom\ControlledRNG;
+use Robotateme\ControlledRandom\Base\ControlledRNG;
 
 require_once 'vendor/autoload.php';
 
@@ -74,7 +74,7 @@ echo $rng->choice($items) . PHP_EOL;
 - `1.0` -> максимальная энтропия (последовательность между запусками обычно различается);
 - `0.0..1.0` -> промежуточный режим.
 
-## API: `Robotateme\ControlledRandom\ControlledRNG`
+## API: `Robotateme\ControlledRandom\Base\ControlledRNG`
 
 ### `__construct(int $seed = 42, float $entropyLevel = 0.0)`
 
@@ -159,7 +159,7 @@ echo $rng->choice($items) . PHP_EOL;
 - `> 1.0` -> более «плоское/хаотичное»;
 - `<= 0` -> возвращает `0.0`.
 
-## Дополнительный класс: `Robotateme\ControlledRandom\Random`
+## Дополнительный класс: `Robotateme\ControlledRandom\Base\Random`
 
 В `src/Random.php` есть статические хелперы:
 
@@ -217,8 +217,8 @@ composer test
 
 Локально в этом репозитории тесты проходят:
 
-- `11` тестов
-- `7108` assertions
+- `26` тестов
+- `28017` assertions
 
 ## Статический анализ
 
@@ -240,10 +240,18 @@ composer stan
 
 ```text
 src/
-  ControlledRNG.php     # основной класс генератора
-  Random.php            # статические вспомогательные методы
+  Base/
+    ControlledRNG.php       # базовый генератор
+    Random.php              # статические вспомогательные методы
+  Examples/
+    Sms/
+      SmsCodeGenerator.php  # генератор красивых SMS-кодов
+      SmsCodePattern.php    # enum шаблонов SMS-кодов
+    Roulette/
+      RouletteNumberGuesser.php # пример механики рулетки с VIP-шансом
 tests/
   ControlledRNGTest.php # unit-тесты
+  RouletteNumberGuesserTest.php
 random.php              # пример использования
 ```
 

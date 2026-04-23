@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace Robotateme\ControlledRandom;
+namespace Robotateme\ControlledRandom\Base;
 
 
 use InvalidArgumentException;

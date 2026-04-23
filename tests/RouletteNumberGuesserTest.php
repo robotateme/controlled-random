@@ -5,8 +5,8 @@ namespace Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Robotateme\ControlledRandom\ControlledRNG;
-use Robotateme\ControlledRandom\RouletteNumberGuesser;
+use Robotateme\ControlledRandom\Base\ControlledRNG;
+use Robotateme\ControlledRandom\Examples\Roulette\RouletteNumberGuesser;
 
 final class RouletteNumberGuesserTest extends TestCase
 {

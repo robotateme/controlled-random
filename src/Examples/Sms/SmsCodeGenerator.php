@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Robotateme\ControlledRandom;
+namespace Robotateme\ControlledRandom\Examples\Sms;
+
+use Robotateme\ControlledRandom\Base\ControlledRNG;
 
 final class SmsCodeGenerator
 {

@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Robotateme\ControlledRandom;
+namespace Robotateme\ControlledRandom\Examples\Roulette;
 
 use InvalidArgumentException;
+use Robotateme\ControlledRandom\Base\ControlledRNG;
 
 final class RouletteNumberGuesser
 {

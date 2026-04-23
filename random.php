@@ -1,6 +1,6 @@
 <?php
 
-use Robotateme\ControlledRandom\ControlledRNG;
+use Robotateme\ControlledRandom\Base\ControlledRNG;
 
 require_once 'vendor/autoload.php';
 

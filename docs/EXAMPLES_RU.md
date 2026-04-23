@@ -1,13 +1,13 @@
 # Примеры использования `controlled-random`
 
-Ниже собраны практические сценарии работы с `Robotateme\ControlledRandom\ControlledRNG`.
+Ниже собраны практические сценарии работы с `Robotateme\ControlledRandom\Base\ControlledRNG`.
 
 Во всех примерах:
 
 ```php
 <?php
 
-use Robotateme\ControlledRandom\ControlledRNG;
+use Robotateme\ControlledRandom\Base\ControlledRNG;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 ```

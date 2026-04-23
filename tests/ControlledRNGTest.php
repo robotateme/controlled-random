@@ -5,8 +5,8 @@ namespace Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Robotateme\ControlledRandom\ControlledRNG;
-use Robotateme\ControlledRandom\SmsCodeGenerator;
+use Robotateme\ControlledRandom\Base\ControlledRNG;
+use Robotateme\ControlledRandom\Examples\Sms\SmsCodeGenerator;
 
 
 class ControlledRNGTest extends TestCase
