@@ -19,14 +19,11 @@ use InvalidArgumentException;
 class ControlledRNG
 {
     private int $state;
-    private float $entropyLevel;
-    private string $buffer = '';
     private int $counter = 0;
-    private int|null|float $gaussianSpare = null;
+    private ?float $gaussianSpare = null;
 
-    public function __construct(int $seed = 42, float $entropyLevel = 0.0)
+    public function __construct(int $seed = 42, private float $entropyLevel = 0.0)
     {
-        $this->setEntropyLevel($entropyLevel);
         $this->state = $seed;
     }
 
@@ -59,13 +56,18 @@ class ControlledRNG
             return $value;
         }
 
-        $noiseBytes = (int)(32 * $this->entropyLevel);
+        $noiseBytes = max(1, (int) floor(32 * $this->entropyLevel));
         $noise = random_bytes($noiseBytes);
 
         $data = pack('J', $value) . $noise . pack('J', $this->counter++);
         $hash = hash('sha256', $data, true);
 
-        return unpack('J', substr($hash, 0, 8))[1];
+        $unpacked = unpack('J', substr($hash, 0, 8));
+        if ($unpacked === false) {
+            throw new \RuntimeException('Failed to unpack hash.');
+        }
+
+        return $unpacked[1];
     }
 
     /**
@@ -97,8 +99,12 @@ class ControlledRNG
 
     /**
      * Выбор элемента
+     *
+     * @template T
+     * @param array<T> $items
+     * @return T
      */
-    public function choice(array $items)
+    public function choice(array $items): mixed
     {
         if (empty($items)) {
             throw new InvalidArgumentException("Empty array");
@@ -109,6 +115,8 @@ class ControlledRNG
 
     /**
      * Shuffle (Fisher–Yates)
+     *
+     * @param array<mixed> $array
      */
     public function shuffle(array &$array): void
     {
@@ -120,6 +128,8 @@ class ControlledRNG
 
     /**
      * Для replay/debug
+     *
+     * @return array{state: int, counter: int}
      */
     public function getState(): array
     {
@@ -129,6 +139,9 @@ class ControlledRNG
         ];
     }
 
+    /**
+     * @param array{state: int, counter: int} $state
+     */
     public function setState(array $state): void
     {
         $this->state = $state['state'];
@@ -164,6 +177,8 @@ class ControlledRNG
     /**
      * Выбор по весам
      * ['a' => 10, 'b' => 1]
+     *
+     * @param array<int|string, int|float> $weights
      */
     public function weightedChoice(array $weights): int|string|null
     {
@@ -213,6 +228,11 @@ class ControlledRNG
         return $this->random() < $p;
     }
 
+    /**
+     * @template T
+     * @param array<T> $items
+     * @return array<T>
+     */
     public function sample(array $items, int $k): array
     {
         if ($k > count($items)) {

@@ -24,7 +24,7 @@ class Random
         $base = hash('sha256', (string) $seed, true);
         $noise = random_bytes(32);
 
-        $mixLength =  (32 * $entropyLevel);
+        $mixLength = (int) floor(32 * $entropyLevel);
 
         $mixed = hash(
             'sha256',
@@ -32,7 +32,11 @@ class Random
             true
         );
 
-        $value = unpack('J', substr($mixed, 0, 8))[1];
+        $unpacked = unpack('J', substr($mixed, 0, 8));
+        if ($unpacked === false) {
+            throw new \RuntimeException('Failed to unpack hash.');
+        }
+        $value = $unpacked[1];
 
         return $value / PHP_INT_MAX;
     }
