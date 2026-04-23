@@ -11,23 +11,16 @@ final class SmsCodeGenerator
 
     public function generate(): string
     {
-        $patterns = [
-            'repeat',
-            'pair',
-            'triple',
-            'palindrome',
-            'ascending',
-            'descending',
-        ];
+        $patterns = SmsCodePattern::cases();
         $pattern = $patterns[$this->int(0, count($patterns) - 1)];
 
         return match ($pattern) {
-            'repeat' => $this->repeatCode(),
-            'pair' => $this->pairCode(),
-            'triple' => $this->tripleCode(),
-            'palindrome' => $this->palindromeCode(),
-            'ascending' => $this->ascendingCode(),
-            'descending' => $this->descendingCode(),
+            SmsCodePattern::Repeat => $this->repeatCode(),
+            SmsCodePattern::Pair => $this->pairCode(),
+            SmsCodePattern::Triple => $this->tripleCode(),
+            SmsCodePattern::Palindrome => $this->palindromeCode(),
+            SmsCodePattern::Ascending => $this->ascendingCode(),
+            SmsCodePattern::Descending => $this->descendingCode(),
         };
     }
 
